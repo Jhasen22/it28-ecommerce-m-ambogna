@@ -3,65 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Product Inventory</title>
-</head>
-<body>
     <style>
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #000000;
             padding: 8px;
             text-align: left;
+            font-style: bolder;
+            font-weight: 300;
+            border-bottom: 1px solid #ddd;
         }
         th {
             background-color: #f2f2f2;
+            font-size: bolder;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        h1 {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>Baligya ni Jhasen</h1>
+    <h1>Baligya ni Jhasen</h1> 
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Product Name</th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th>Available Quantity</th>
+                <th>Product Picture</th>
+                <th>Availability</th>
+                <th>Action</th> <!-- Added column for action buttons -->
+            
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>TAWAS</td>
-                <td>20.00</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>TOOTHPASTE</td>
-                <td>10.00</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>SHAMPOO</td>
-                <td>07.00</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>TOOTH BRUSH</td>
-                <td>25.00</td>
-                <td>1</td>
-            </tr>
+        <tbody id="inventory">
             
         </tbody>
     </table>
+
+    <script>
+        var products = [
+            { name: "Tawas", price:15, quantity: 50, picture: "https://api.watsons.com.ph/medias/zoom-front-50039585.jpg?context=bWFzdGVyfGltYWdlc3wyNTc0NDJ8aW1hZ2UvanBlZ3xhRGxtTDJneE55OHhNRGcyT0RJeE56UTBOalF6TUM5WFZFTlFTQzAxTURBek9UVTROUzFtY205dWRDNXFjR2N8MzdhNjlmMDc0ZGU1ZjdmZmY4Y2M1YmFjMTYxMmYwMDIxZTVkNzg1YTYyMmRjMTQ1N2MyZTlkNWEzYzZlMjQ5NQ" },
+            { name: "Toothbrush", price: 20, quantity: 50, picture: "https://www.colgate.com/content/dam/cp-sites/oral-care/oral-care-center/en-ph/product-detail-pages/toothbrush/colgate-extra-clean.jpg" },
+            { name: "Shampoo", price: 20, quantity: 50, picture: "https://images.ctfassets.net/3glj7scbhnae/2ns5P7wv4y675oCRAhX5Eq/480628b64f80147435e59cf5946a5423/HS_PH_Apple_large__1_.jpg?fm=webp&q=75" },
+            { name: "Tooth paste", price: 10, quantity: 50, picture: "https://ever.ph/cdn/shop/products/9000016668-Colgate-Toothpaste-Triple-Action-Original-Mint-193g-220727_464efdde-cf12-4411-acbe-951069c80aa3_1200x1200.jpg?v=1707980793"},
+        
+        ];
+
+        function displayProducts() {
+            var inventoryTbody = document.getElementById("inventory");
+            inventoryTbody.innerHTML = ""; 
+
+            products.forEach(function(product) {
+                var row = document.createElement("tr");
+
+                var nameCell = document.createElement("td");
+                nameCell.textContent = product.name;
+                row.appendChild(nameCell);
+
+                var priceCell = document.createElement("td");
+                priceCell.textContent = "₱" + product.price;
+                row.appendChild(priceCell);
+
+                var quantityCell = document.createElement("td");
+                quantityCell.textContent = product.quantity;
+                row.appendChild(quantityCell);
+
+                var pictureCell = document.createElement("td");
+                var img = document.createElement("img");
+                img.src = product.picture;
+                pictureCell.appendChild(img);
+                row.appendChild(pictureCell);
+
+                var availabilityCell = document.createElement("td");
+                availabilityCell.textContent = product.quantity > 0 ? "Available" : "Out of Stock";
+                row.appendChild(availabilityCell);
+
+                var actionCell = document.createElement("td");
+                var buyButton = document.createElement("a");
+                buyButton.href = "payment.html";
+                buyButton.className = "btn btn-primary";
+                buyButton.textContent = "Buy";
+                actionCell.appendChild(buyButton);
+                row.appendChild(actionCell);
+
+                inventoryTbody.appendChild(row);
+            });
+        }
+
+        window.onload = function() {
+            displayProducts();
+        };
+        
+    </script>
+   
+    <a href="customer service.html" class="btn btn-danger">Customer Service</a>
 </body>
-</html>
-    
 </body>
 </html>
